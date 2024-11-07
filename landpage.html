@@ -1,0 +1,195 @@
+
+<!--landpage.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Expense Tracker</title>
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: white; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-size: 22px;
+            color:black;
+        }
+
+        .right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .right button {
+            padding: 20px 40px;
+            background-color: #081ddd;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 50px;
+        }
+
+        .right button:hover {
+            background-color: #1f314f;
+        }
+
+        .container img {
+            width: 1000px; 
+            height: auto;
+            border-radius: 50px;
+        }
+
+        /* Feature section CSS */
+        .features {
+            padding: 60px 0;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .features h2 {
+            margin-bottom: 40px;
+        }
+
+        .feature-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            max-width: 1200px;
+            gap: 1.5rem;
+        }
+
+        .feature {
+            flex-basis: 22%;
+            margin-bottom: 40px;
+        }
+
+        .feature img {
+            width: 200px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .feature img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            margin: 10% auto;
+            display: block;
+            width: 60%;
+            max-width: 800px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="right">
+        <button type="button" onclick="location.href='login.html'">Login Now</button>
+    </div>
+    <div class="heading">
+        <h1>Personal Expense Tracker</h1>  
+    </div>
+    <div class="paragraph">
+        <p>Track your expenses, manage your budget, and achieve financial freedom with our easy-to-use expense tracking app.</p>
+    </div>
+
+    <div class="container">
+        <img src="img/landingpageimg.png" alt="Expense Tracker Image">
+    </div>
+
+    <!-- Features section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Why Choose Our Expense Tracker?</h2>
+            <div class="feature-grid">
+                <div class="feature">
+                    <img src="img/budget.jpg" alt="Simple Expense Tracking" class="feature-img">
+                    <h3>Simple Expense Tracking</h3>
+                    <p>Easily log your daily expenses in just a few taps.</p>
+                </div>
+                <div class="feature">
+                    <img src="img/personalexpense.jpg" alt="Budget Management" class="feature-img">
+                    <h3>Budget Management</h3>
+                    <p>Set up monthly budgets and track progress.</p>
+                </div>
+                <div class="feature">
+                    <img src="img/expense.jpg" alt="Customizable Categories" class="feature-img">
+                    <h3>Customizable Categories</h3>
+                    <p>Organize spending into custom categories.</p>
+                </div>
+                <div class="feature">
+                    <img src="img/tracker.jpg" alt="Visual Reports" class="feature-img">
+                    <h3>Visual Reports</h3>
+                    <p>Get insights with charts and graphs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Structure -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Get modal elements
+        var modal = document.getElementById("imageModal");
+        var modalImage = document.getElementById("modalImage");
+
+        // Open modal on feature image click
+        document.querySelectorAll('.feature-img').forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "block";
+                modalImage.src = this.src;
+            }
+        });
+
+        // Close modal when the close button is clicked
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Close modal when clicking outside of the modal content
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

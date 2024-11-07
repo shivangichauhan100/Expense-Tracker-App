@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+  
+    body {
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Baloo Bhai', sans-serif;
+      font-size: 22px;
+    }
+  
+    .container {
+      margin: 50px auto;
+      width: 700px;
+    }
+  
+    h1 {
+      letter-spacing: 1px;
+      margin: 0;
+      text-align: center;
+    }
+     
+    h3 {
+      border-bottom: 1px solid #bbb;
+      padding-bottom: 10px;
+      margin: 40px 0 10px;
+    }
+  
+    h4 {
+      margin: 0;
+      text-transform: uppercase;
+    }
+  
+    .inc-exp-container {
+      background-color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+  
+    .inc-exp-container > div {
+      flex: 1;
+      text-align: center;
+    }
+  
+    .inc-exp-container > div:first-of-type {
+      border-right: 1px solid #dedede;
+    }
+  
+    .money {
+      font-size: 2rem;
+      letter-spacing: 1px;
+      margin: 5px 0;
+    }
+  
+    .money-plus {
+      color: #2ecc71;
+    }
+  
+    .money-minus {
+      color: #c0392b;
+    }
+  
+    label {
+      display: inline-block;
+      margin: 10px 0;
+    }
+  
+    input[type="text"],
+    input[type="number"] {
+      border: 1px solid #dedede;
+      border-radius: 2px;
+      display: block;
+      font-size: 16px;
+      padding: 10px;
+      width: 100%;
+    }
+  
+    .btn {
+      cursor: pointer;
+      background: -webkit-linear-gradient(right, #003366, #004080, #0059b3, #0073e6);
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+      color: #fff;
+      border: 0;
+      display: block;
+      font-size: 16px;
+      margin: 10px 0 30px;
+      padding: 10px;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: -webkit-linear-gradient(right, #004080, #0059b3, #0073e6, #003366);
+    }
+  
+    .list {
+      list-style-type: none;
+      padding: 0;
+      margin-bottom: 40px;
+      height: 200px;
+      overflow-y: scroll;
+    }
+  
+    .list li {
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      padding: 10px;
+      margin: 10px 0;
+      transition: transform 0.2s;
+    }
+  
+    .list li.plus {
+      border-right: 5px solid #2ecc71;
+    }
+  
+    .list li.minus {
+      border-right: 5px solid #c0392b;
+    }
+  
+    .delete-btn {
+      cursor: pointer;
+      background-color: #e74c3c;
+      border: 0;
+      color: #fff;
+      font-size: 20px;
+      line-height: 20px;
+      padding: 2px 5px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(-100%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  
+    .list li:hover .delete-btn {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Personal Expense Tracker</h1>
+
+    <div class="inc-exp-container">
+      <div>
+        <h4>Your Balance</h4>
+        <h1 id="balance">&#8377;0.00</h1>
+      </div>
+    </div>
+
+    <div class="inc-exp-container">
+      <div>
+        <h4>Income</h4>
+        <p id="money-plus" class="money money-plus">+&#8377;0.00</p>
+      </div>
+      <div>
+        <h4>Expense</h4>
+        <p id="money-minus" class="money money-minus">-&#8377;0.00</p>
+      </div>
+    </div>
+
+    <h3>History</h3>
+    <ul id="list" class="list"></ul>
+
+    <h3>Add New Amount</h3>
+    <form id="form">
+      <div class="form-control">
+        <label for="text">Text</label>
+        <input type="text" id="text" placeholder="Enter description..." required />
+      </div>
+      <div class="form-control">
+        <label for="amount">Amount <br /> (negative - expense, positive - income)</label>
+        <input type="number" id="amount" placeholder="Enter amount..." required />
+      </div>
+      <button type="submit" class="btn">Add Amount</button>
+      <button type="button" class="btn" id="clear-history">Clear History</button>
+    </form>
+  </div>
+
+  <script>
+    const balance = document.getElementById("balance");
+    const money_plus = document.getElementById("money-plus");
+    const money_minus = document.getElementById("money-minus");
+    const list = document.getElementById("list");
+    const form = document.getElementById("form");
+    const text = document.getElementById("text");
+    const amount = document.getElementById("amount");
+
+    const localStorageTransactions = JSON.parse(localStorage.getItem('transactions'));
+    let transactions = localStorage.getItem('transactions') !== null ? localStorageTransactions : [];
+
+    function addTransaction(e) {
+      e.preventDefault();
+      if (text.value.trim() === '' || amount.value.trim() === '') {
+        alert('Please add text and amount');
+      } else {
+        const transaction = {
+          id: generateID(),
+          text: text.value,
+          amount: +amount.value,
+        };
+
+        transactions.push(transaction);
+        addTransactionDOM(transaction);
+        updateValues();
+        updateLocalStorage();
+        text.value = '';
+        amount.value = '';
+      }
+    }
+
+    function generateID() {
+      return Math.floor(Math.random() * 1000000000);
+    }
+
+    function addTransactionDOM(transaction) {
+      const sign = transaction.amount < 0 ? '-' : '+';
+      const item = document.createElement('li');
+
+      item.classList.add(transaction.amount < 0 ? 'minus' : 'plus');
+
+      item.innerHTML = `
+        ${transaction.text} <span>${sign}&#8377;${Math.abs(transaction.amount)}</span>
+        <button class="delete-btn" onclick="removeTransaction(${transaction.id})">x</button>
+      `;
+
+      list.appendChild(item);
+    }
+
+    function updateValues() {
+      const amounts = transactions.map(transaction => transaction.amount);
+      const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
+      const income = amounts.filter(item => item > 0).reduce((acc, item) => (acc += item), 0).toFixed(2);
+      const expense = (amounts.filter(item => item < 0).reduce((acc, item) => (acc += item), 0) * -1).toFixed(2);
+
+      balance.innerHTML = `&#8377;${total}`;
+      money_plus.innerHTML = `+&#8377;${income}`;
+      money_minus.innerHTML = `-&#8377;${expense}`;
+    }
+
+    function removeTransaction(id) {
+      transactions = transactions.filter(transaction => transaction.id !== id);
+      updateLocalStorage();
+      init();
+    }
+
+    function updateLocalStorage() {
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+    }
+
+    function init() {
+      list.innerHTML = '';
+      transactions.forEach(addTransactionDOM);
+      updateValues();
+    }
+
+    function clearHistory() {
+      if (confirm("Are you sure you want to clear all transaction history?")) {
+        transactions = [];
+        updateLocalStorage();
+        init();
+      }
+    }
+
+    document.getElementById('clear-history').addEventListener('click', clearHistory);
+    form.addEventListener('submit', addTransaction);
+    init();
+  </script>
+</body>
+</html>

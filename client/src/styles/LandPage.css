@@ -1,0 +1,162 @@
+/* src/styles/LandPage.css */
+@import url("https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap");
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: white; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-size: 22px;
+    color: black;
+    font-family: 'Baloo Bhai', sans-serif;
+}
+
+.right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.right button {
+    padding: 20px 40px;
+    background-color: #081ddd;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 50px;
+    transition: background-color 0.3s;
+}
+
+.right button:hover {
+    background-color: #1f314f;
+}
+
+.container img {
+    width: 100%; /* Make it responsive */
+    max-width: 1000px; /* Limit the max width */
+    height: auto;
+    border-radius: 50px;
+}
+
+/* Features section CSS */
+.features {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.features h2 {
+    margin-bottom: 40px;
+}
+
+.feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    gap: 1.5rem;
+}
+
+.feature {
+    flex: 1 1 22%; /* Flexible sizing */
+    max-width: 250px; /* Max width for features */
+    margin-bottom: 40px;
+}
+
+.feature img {
+    width: 100%; /* Make feature images responsive */
+    height: auto;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.feature img:hover {
+    transform: scale(1.1);
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Control display with state in React */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex; /* Center the modal content */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    display: block;
+    width: 60%;
+    max-width: 800px;
+    border-radius: 8px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .right {
+        position: static; /* Reset position */
+        margin: 20px 0; /* Add margin for better spacing */
+    }
+
+    body {
+        font-size: 18px; /* Adjust font size */
+    }
+
+    .container img {
+        width: 90%; /* Make container images more responsive */
+    }
+
+    .feature-grid {
+        flex-direction: column; /* Stack features vertically */
+        align-items: center;
+    }
+
+    .feature {
+        flex-basis: 100%; /* Full width for features */
+        max-width: none; /* Reset max width */
+    }
+
+    .features h2 {
+        font-size: 1.8rem; /* Smaller heading */
+    }
+}
+
+@media (max-width: 480px) {
+    .right button {
+        padding: 10px 20px; /* Smaller button */
+        font-size: 14px; /* Smaller font */
+    }
+
+    body {
+        font-size: 16px; /* Further adjust font size */
+    }
+
+    .features h2 {
+        font-size: 1.5rem; /* Smaller heading */
+    }
+}
