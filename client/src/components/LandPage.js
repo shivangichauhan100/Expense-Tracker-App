@@ -37,7 +37,7 @@ function LandingPage() {
                 <div className="container">
                     <h2>Why Choose Our Expense Tracker?</h2>
                     <div className="feature-grid">
-                        {[
+                        {[ 
                             { src: '/img/budget.jpg', title: 'Simple Expense Tracking', description: 'Easily log your daily expenses in just a few taps.' },
                             { src: '/img/personalexpense.jpg', title: 'Budget Management', description: 'Set up monthly budgets and track progress.' },
                             { src: '/img/expense.jpg', title: 'Customizable Categories', description: 'Organize spending into custom categories.' },
@@ -62,6 +62,7 @@ function LandingPage() {
             )}
         </div>
     );
-}
+};
+
 
 export default LandingPage;

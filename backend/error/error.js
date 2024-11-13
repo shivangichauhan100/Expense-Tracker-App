@@ -1,3 +1,5 @@
+//backend/error/error.js
+import ErrorHandler from "../error/error.js";
 class ErrorHandler extends Error {
     constructor(message, statusCode) {
         super(message);

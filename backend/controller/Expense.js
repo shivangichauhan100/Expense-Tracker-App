@@ -1,6 +1,6 @@
+// backend/controller/Expense.js
 import User from "../models/userSchema.js";
-import Transaction from '../models/transactionSchema.js';
-import Category from "../models/categorySchema.js";
+import Transaction from "../models/transactionSchema.js";  // Change 'transaction' to 'Transaction'
 
 // Example function to create a new user
 export const createUser = async (req, res) => {
@@ -16,14 +16,16 @@ export const createUser = async (req, res) => {
 
 // Example function to create a new transaction
 export const sendExpense = async (req, res) => {
-  console.log("Incoming request body:", req.body); // Add this line
+  console.log("Incoming request body:", req.body); // Log the incoming request body
   const { userId, text, amount } = req.body;
 
+  // Validation for required fields
   if (!userId || !text || !amount) {
       return res.status(400).json({ error: "All fields (userId, text, amount) are required." });
   }
 
   try {
+      // Create a new transaction
       const newTransaction = new Transaction({ userId, text, amount });
       const savedTransaction = await newTransaction.save();
       res.status(201).json({ message: "Transaction created successfully", transaction: savedTransaction });
@@ -31,16 +33,21 @@ export const sendExpense = async (req, res) => {
       res.status(500).json({ error: error.message });
   }
 };
-
-
-
-// Example function to create a new category
+// controller/Expense.js
 export const createCategory = async (req, res) => {
   try {
-    const { userId, name, type } = req.body;
-    const newCategory = new Category({ userId, name, type });
-    const savedCategory = await newCategory.save();
-    res.status(201).json({ message: "Category created successfully", category: savedCategory });
+    const { name } = req.body;
+
+    // Example validation
+    if (!name) {
+      return res.status(400).json({ error: "Category name is required" });
+    }
+
+    // Create category logic (you would need a Category model for this)
+    // const newCategory = new Category({ name });
+    // const savedCategory = await newCategory.save();
+
+    res.status(201).json({ message: "Category created successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -1,11 +1,11 @@
 import express from 'express';
-import { createUser, sendExpense, createCategory } from "../controller/Expense.js";
+import mongoose from "mongoose";
 
+import { createUser, sendExpense } from "../controller/Expense.js"; // Correctly importing sendExpense
 const router = express.Router();
 
 // Define routes
 router.post('/users', createUser); // To create a new user
-router.post('/expenses', sendExpense); // To create a new transaction
-router.post('/categories', createCategory); // To create a new category
+router.post('/transaction', sendExpense); // Corrected to use sendExpense
 
 export default router;

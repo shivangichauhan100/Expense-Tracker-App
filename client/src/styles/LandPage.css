@@ -57,13 +57,32 @@ body {
 .features h2 {
     margin-bottom: 40px;
 }
-
+/* 
 .feature-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     max-width: 1200px;
     gap: 1.5rem;
+} */
+.heading {
+    margin-top: 769px;
+    text-align: center;
+}
+.paragraph {
+    text-align: center;
+}
+.landing-page {
+    background-color: white;
+}
+.feature-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    max-width: 1200px;
+    gap: 1.5rem;
+    flex-direction: row;
+    align-items: baseline;
 }
 
 .feature {

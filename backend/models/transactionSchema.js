@@ -1,5 +1,7 @@
-import mongoose from "mongoose";
+//backend/models/transactionSchema.js
+import mongoose from 'mongoose';
 
+// Define the transaction schema
 const transactionSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -20,4 +22,6 @@ const transactionSchema = new mongoose.Schema({
     },
 });
 
-export default mongoose.model("Transaction", transactionSchema);
+// Export the Transaction model
+const Transaction = mongoose.model('Transaction', transactionSchema);
+export default Transaction;
