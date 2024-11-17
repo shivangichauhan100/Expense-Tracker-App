@@ -1,0 +1,309 @@
+<!--EXpenseTrackerApp-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <title>ExpenseTrackerApp</title>
+  <style>
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Makes sure the video covers the entire area */
+      z-index: -1; /* Keeps the video behind other content */
+    }
+  
+    .content {
+      position: relative;
+      z-index: 1; /* Keeps the content above the video */
+    }
+    .banner video {
+        position:absolute;
+        right:0;
+        bottom:0;
+        z-index: -1;
+    }
+    
+    @media(min-aspect-ratio:16/9) {
+        .banner video{
+            width:100%;
+            height:auto;
+        }
+    }
+    /* Table Styling */
+    .table th, .table td {
+      color: #f8f9fa; /* Light color for better contrast with dark background */
+    }
+
+    .table-striped tbody tr:nth-child(odd) {
+      background-color: #343a40; /* Darker background for odd rows for contrast */
+    }
+
+    .table-striped tbody tr:nth-child(even) {
+      background-color: #495057; /* Slightly lighter background for even rows */
+    }
+
+    .table th {
+      color: #ffffff; /* White color for header text */
+    }
+
+    .table tbody td {
+      color: #dcdcdc; /* Lighter color for the body rows */
+    }
+
+    /* Optional: Table border styling */
+    .table, .table th, .table td {
+      border-color: #dee2e6; /* Set light border for better visibility */
+    }
+   
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <video autoplay loop muted id="banner">
+      <source src="TrackerApp.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="container">
+    <h1 class="text-center mt-5 text-white">
+      ExpenseTrackerApp
+    </h1>
+    <h2 class="text-center mt-5 text-white">
+      Your Balance
+    </h2>
+    <h3 class="text-center mt-5 balance text-white">₹0</h3>
+    <hr>
+    <div class="d-flex flex-column align-items-center">
+      <div class="w-50 d-flex justify-content-between align-items-center">
+        <h2 class="text-white">Income</h2>
+        <h2 class="text-white">Expense</h2>
+      </div>
+      <div class="w-50 d-flex justify-content-between align-items-center">
+        <h2 class="text-success income">₹0</h2> <!-- Income element -->
+        <h2 class="text-danger expense">₹0</h2> <!-- Expense element -->     
+      </div>
+      <hr>
+      <div class="d-flex flex-column align-items-center">
+        <h2 class="text-white">History</h2>
+        <h2 class="text-white">Add New Transaction</h2>
+      </div>
+      <div class="w-75 mt-3 table-responsive">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th class="text-white">Title</th>
+              <th class="text-white">Amount</th>
+              <th class="text-white">Transaction</th>
+              <th class="text-white">Date</th>
+              <th class="text-white">Action</th>
+            </tr>
+          </thead>
+          <tbody class="t-list">
+            <!-- Dynamic rows will be added here by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <button data-bs-toggle="modal" data-bs-target="#myModal" class="btn modal-btn bg-primary text-white rounded-circle position-fixed end-0 bottom-0" style="margin: 60px;">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div> 
+
+  <!-- Modal for adding transactions -->
+  <div class="modal" id="myModal">
+    <div class="animate__animated animate__zoomIn modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-white">Add Your Transaction</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form class="t-form">
+            <select class="form-select mb-3">
+              <option value="transaction" hidden>Transaction</option>
+              <option value="cr">Cr</option>
+              <option value="dr">Dr</option>
+            </select>
+            <input required type="text" placeholder="Title" class="form-control mb-3">
+            <input required type="text" placeholder="Amount" class="form-control mb-3">
+            <button type="submit" class="btn btn-primary text-white w-100">Submit</button>
+            <button type="update" class="btn btn-danger text-white w-100">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+let tForm = document.querySelector(".t-form");
+let allInput = tForm.querySelectorAll("input");
+let selectEl = tForm.querySelector("select");
+let allBtn = tForm.querySelectorAll("button");
+let btnClose = document.querySelector(".btn-close");
+let balanceEl = document.querySelector(".balance");
+let incomeEl = document.querySelector(".income");
+let expenseEl = document.querySelector(".expense");
+let tListEl = document.querySelector(".t-list");
+let modalBtn = document.querySelector(".modal-btn");
+
+let transaction = [];
+
+// Load transactions from localStorage
+if(localStorage.getItem('transaction') != null) {
+  transaction = JSON.parse(localStorage.getItem('transaction'));
+}
+console.log(transaction);
+
+// Add transaction
+tForm.onsubmit = (e) => {
+  e.preventDefault();
+  let obj = {
+    title: allInput[0].value,
+    amount: allInput[1].value,
+    transaction: selectEl.value,
+    date: new Date()
+  };
+  transaction.push(obj);
+  localStorage.setItem('transaction', JSON.stringify(transaction));
+  swal("Success", 'Transaction Added', 'success');
+  btnClose.click();
+  tForm.reset();
+  showTransaction();
+  calculation();
+}
+
+// Format date
+const formateDate = (d) => {
+  let date = new Date(d);
+  let yy = date.getFullYear();
+  let mm = date.getMonth() + 1;
+  let dd = date.getDate();
+  let time = date.toLocaleTimeString();
+  mm = mm < 10 ? '0' + mm : mm;
+  dd = dd < 10 ? '0' + dd : dd;
+  return `${dd}-${mm}-${yy} ${time}`;
+}
+
+//Delete Transaction
+const deleteFunc = () =>{
+  let allDelBtn = tListEl.querySelectorAll(".del-btn");
+  allDelBtn.forEach((btn,index)=>{
+    btn.onclick = () =>{
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          transaction.splice(index,1);
+          localStorage.setItem('transaction', JSON.stringify(transaction));
+          showTransaction();
+          calculation();
+          swal("Poof! Your imaginary file has been deleted!", {
+            icon: "success",
+          });
+        } else {
+          swal("Your imaginary file is safe!");
+        }
+      });
+    }
+});
+
+} 
+
+
+//Update Tramsaction
+const updateFunc =() =>{
+  let alEditBtn = tListEl.querySelectorAll(".edit-btn");
+  alEditBtn.forEach((btn,index)=>{
+    btn.onclick = () =>{
+      modalBtn.click();
+      selectEl.value = btn.getAttribute("trans");
+      allInput[0].value = btn.getAttribute("title");
+      allInput[1].value = btn.getAttribute("amount");
+
+      allBtn[0].classList.remove("d-none");
+      allBtn[1].classList.add("d-none");
+      allBtn[1].onclick= () =>{
+        e.preventDefault();
+        let obj = {
+          title: allInput[0].value,
+          amount: allInput[1].value,
+          transaction: selectEl.value,
+          date: new Date()
+        };
+        transaction[index]=(obj);
+        localStorage.setItem('transaction', JSON.stringify(transaction));
+        swal("Success", 'Transaction Added', 'success');
+        btnClose.click();
+        tForm.reset();
+        showTransaction();
+        calculation();
+
+      } 
+    }
+  });
+}
+updateFunc();
+ 
+// Show all transactions
+const showTransaction = () => {
+  tListEl.innerHTML = "";
+  transaction.forEach((item,index) => {
+    tListEl.innerHTML += `
+      <tr>
+         <td class="text-nowrap">${item.title}</td>
+         <td class="text-nowrap">₹${item.amount}</td>
+         <td class="text-nowrap">${item.transaction}</td>
+         <td class="text-nowrap">${formateDate(item.date)}</td>
+         <td class="text-nowrap">
+           <button title="${item.title}" amount="${item.amount}" trans="${item.transaction}" class="btn edit-btn text-success">
+             <i class="fa fa-pen"></i>
+           </button>
+           <button class="btn del-btn text-danger">
+             <i class="fa fa-trash"></i>
+           </button>
+         </td>
+      </tr>
+    `;
+  });
+  updateFunc();
+  deleteFunc();
+}
+
+// calculation Transaction
+const calculation = () =>{
+  let totalCr = 0;
+  let totalDr = 0;
+  let filterCr = transaction.filter((item)=>item.transaction == 'cr')
+  for(let obj of filterCr)
+  {
+    totalCr += Number(obj.amount);
+  }
+  let filterDr = transaction.filter((item)=>item.transaction == 'dr')
+  filterDr.forEach((obj)=>{
+    totalDr += Number(obj.amount);
+  });
+ 
+  incomeEl.innerText = `₹${totalCr}`;
+  expenseEl.innerText = `₹${totalDr}`;
+  Number(totalCr - totalDr) < 0 ? balanceEl.style.color = 'red' : balanceEl.style.color = 'green'
+  balanceEl.innerText = `₹${Number(totalCr - totalDr)}`;
+}
+calculation();
+showTransaction();
+  </script>
+</body>
+</html>
