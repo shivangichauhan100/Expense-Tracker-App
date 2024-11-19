@@ -1,27 +1,28 @@
 //backend/models/transactionSchema.js
+
 import mongoose from 'mongoose';
 
-// Define the transaction schema
 const transactionSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', 
-        required: true,
-    },
-    text: {
-        type: String,
-        required: true,
-    },
-    amount: {
-        type: Number,
-        required: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
+  title: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  amount: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  transaction: {
+    type: String,
+    enum: ['cr', 'dr'],
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-// Export the Transaction model
-const Transaction = mongoose.model('Transaction', transactionSchema);
-export default Transaction;
+// Use export default
+export default mongoose.model('Transaction', transactionSchema);

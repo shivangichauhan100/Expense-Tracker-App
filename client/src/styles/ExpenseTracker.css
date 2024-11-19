@@ -7,40 +7,52 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  z-index: -1;
+  object-fit: cover; /* Makes sure the video covers the entire area */
+  z-index: -1; /* Keeps the video behind other content */
 }
+.table-large-font {
+  font-size: 1.7rem; /* Adjust the size as needed */
+}
+
 .content {
   position: relative;
-  z-index: 1;
+  z-index: 1; /* Keeps the content above the video */
 }
 .banner video {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
+    position:absolute;
+    right:0;
+    bottom:0;
+    z-index: -1;
 }
- /* Table Styling */
- .table th, .table td {
-  color: #f8f9fa;
+
+@media(min-aspect-ratio:16/9) {
+    .banner video{
+        width:100%;
+        height:auto;
+    }
+}
+/* Table Styling */
+.table th, .table td {
+  color: #f8f9fa; /* Light color for better contrast with dark background */
 }
 
 .table-striped tbody tr:nth-child(odd) {
-  background-color: #343a40;
+  background-color: #343a40; /* Darker background for odd rows for contrast */
 }
 
 .table-striped tbody tr:nth-child(even) {
-  background-color: #495057;
+  background-color: #495057; /* Slightly lighter background for even rows */
 }
 
 .table th {
-  color: #ffffff;
+  color: #ffffff; /* White color for header text */
 }
 
 .table tbody td {
-  color: #dcdcdc;
+  color: #dcdcdc; /* Lighter color for the body rows */
 }
 
+/* Optional: Table border styling */
 .table, .table th, .table td {
-  border-color: #dee2e6;
+  border-color: #dee2e6; /* Set light border for better visibility */
 }

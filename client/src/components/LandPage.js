@@ -1,5 +1,4 @@
 // src/components/LandingPage.js
-// src/components/LandingPage.js
 import React, { useState } from 'react';
 import './LandPage.css';
 
@@ -31,7 +30,7 @@ function LandingPage() {
       </div>
 
       <div className="container">
-        <img src="/img/landingpageimg.png" alt="Expense Tracker" width="1000" />
+        <img src="/img/landpage.jpg" alt="Expense Tracker" width="1000" />
       </div>
 
       <section className="features" id="features">

@@ -1,10 +1,9 @@
-//backend/error/error.js
 // backend/error/error.js
 
 class ErrorHandler extends Error {
     constructor(message, statusCode) {
         super(message);
-        this.statusCode = statusCode;
+        this.statusCode = statusCode || 500;  // Default status code 500
     }
 }
 
@@ -18,5 +17,4 @@ export const errorMiddleware = (err, req, res, next) => {
     });
 };
 
-// Export the ErrorHandler class itself
 export default ErrorHandler;

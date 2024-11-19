@@ -1,4 +1,5 @@
 /* src/styles/LandPage.css */
+/* src/styles/LandPage.css */
 @import url("https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap");
 
 /* LandingPage.css */
@@ -7,56 +8,68 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-  
-  body {
+}
+
+body {
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    font-family: 'Baloo Bhai', sans-serif; /* Apply custom font */
     font-size: 22px;
     color: black;
-  }
-  
-  .right {
+    text-align: center; /* Centers the text in the body */
+}
+
+/* Centered content (heading and paragraph) */
+.heading, .paragraph {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Right button styles */
+.right {
     position: absolute;
     top: 20px;
     right: 20px;
-  }
-  
-  .right button {
+}
+
+.right button {
     padding: 20px 40px;
-   background-color: #081ddd;
+    background-color: #081ddd;
     color: white;
     border: none;
     cursor: pointer;
     font-size: 16px;
     border-radius: 50px;
-  }
-  
-  .right button:hover {
+}
+
+.right button:hover {
     background-color: #1f314f;
-  }
-  
-  .container img {
+}
+
+/* Image container styles */
+.container img {
     width: 1000px;
     height: auto;
     border-radius: 50px;
-  }
-  
-  .features {
+}
+
+/* Features section */
+.features {
     padding: 60px 0;
     background-color: #f9f9f9;
     text-align: center;
-  }
-  
-  .features h2 {
+}
+
+.features h2 {
     margin-bottom: 40px;
-  }
-  
-  .feature-grid {
+}
+
+.feature-grid {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -64,26 +77,26 @@
     gap: 1.5rem;
     flex-direction: row;
     align-items: baseline;
-  }
-  
-  .feature {
+}
+
+.feature {
     flex-basis: 22%;
     margin-bottom: 40px;
-  }
-  
-  .feature img {
+}
+
+.feature img {
     width: 200px;
     margin-bottom: 20px;
     cursor: pointer;
     transition: transform 0.3s;
-  }
-  
-  .feature img:hover {
+}
+
+.feature img:hover {
     transform: scale(1.1);
-  }
-  
-  /* Modal styles */
-  .modal {
+}
+
+/* Modal styles */
+.modal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -94,15 +107,15 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     width: 60%;
     max-width: 800px;
     border-radius: 8px;
-  }
-  
-  .close {
+}
+
+.close {
     position: absolute;
     top: 20px;
     right: 35px;
@@ -110,5 +123,4 @@
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
-  }
-  
+}

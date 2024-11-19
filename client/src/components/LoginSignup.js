@@ -1,9 +1,7 @@
 //client/src/components/LOginSignup.js
-
 import React, { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './LoginSignup.css';
-
 const LoginSignup = () => {
     const navigate = useNavigate(); // Initialize useNavigate
     const [isSignup, setIsSignup] = useState(false);
@@ -13,13 +11,11 @@ const LoginSignup = () => {
         password: '',
         confirmPassword: '',
     });
-
     const handleToggle = () => {
         setIsSignup(!isSignup);
         // Reset form data when switching between login and signup
         setFormData({ username: '', email: '', password: '', confirmPassword: '' });
     };
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -27,7 +23,6 @@ const LoginSignup = () => {
             [name]: value
         }));
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isSignup) {
@@ -41,8 +36,7 @@ const LoginSignup = () => {
         // Reset form data after submission
         setFormData({ username: '', email: '', password: '', confirmPassword: '' });
     };
-
-    return (
+   return (
         <div className="wrapper">
             <div className="title-text">
                 <div className={`title login ${!isSignup ? 'active' : ''}`}>Enter Your Account</div>
@@ -99,5 +93,4 @@ const LoginSignup = () => {
         </div>
     );
 }
-
 export default LoginSignup;
