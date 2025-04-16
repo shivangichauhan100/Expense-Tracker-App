@@ -11,6 +11,7 @@ export const dbConnection = () => {
     })
     .catch((err) => {
       console.error(`Some error occurred while connecting to the database: ${err}`);
+
       process.exit(1); // Exit the process if the DB connection fails
     });
 };

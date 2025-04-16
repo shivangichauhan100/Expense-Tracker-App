@@ -1,3 +1,4 @@
+//backend>server.js
 import app from './app.js';
 import { dbConnection } from './database/dbConnection.js';
 import User from './models/userSchema.js';
@@ -11,6 +12,7 @@ async function createSampleData() {
             console.log('Skipping sample data creation in non-development environment.');
             return;
         }
+        
 
         let user = await User.findOne({ username: 'Shivangi Chauhan' });
         if (!user) {
@@ -46,6 +48,7 @@ async function startServer() {
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         });
+        
     } catch (error) {
         console.error('Error starting the server:', error);
     }

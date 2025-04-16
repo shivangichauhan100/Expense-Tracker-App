@@ -1,21 +1,28 @@
-// routes/transactions.js
+//backend>routes>transactions.js
 import express from 'express';
-import Transaction from '../models/transactionSchema.js';  // Correct import
+import mongoose from 'mongoose';
+import Transaction from '../models/transactionSchema.js';
 const router = express.Router();
 
 // Create a new transaction
 router.post('/add', async (req, res) => {
-    const { userId, text, amount } = req.body; // Get data from the request body
-    
-    if (!text || !amount) {
-        return res.status(400).json({ message: 'Text and amount are required' });
+    const { userId, title, amount, transaction } = req.body;
+
+    if (!title || !amount || !transaction) {
+        return res.status(400).json({ message: 'Title, amount, and transaction type are required' });
+    }
+
+    // Validate transaction type
+    if (!['cr', 'dr'].includes(transaction)) {
+        return res.status(400).json({ message: 'Transaction type must be either "cr" or "dr"' });
     }
 
     try {
         const newTransaction = new Transaction({
-            userId, // Assuming the userId is passed from the frontend or authenticated user
-            text,
-            amount
+            userId,
+            title,
+            amount,
+            transaction
         });
 
         const savedTransaction = await newTransaction.save();
@@ -25,12 +32,17 @@ router.post('/add', async (req, res) => {
     }
 });
 
-// Get all transactions for a user
+// Get all transactions for a user with pagination
 router.get('/:userId', async (req, res) => {
     const { userId } = req.params;
-    
+    const page = parseInt(req.query.page) || 1;  // Default to page 1
+    const limit = parseInt(req.query.limit) || 10;  // Default to 10 items per page
+
     try {
-        const transactions = await Transaction.find({ userId });
+        const transactions = await Transaction.find({ userId })
+            .skip((page - 1) * limit)
+            .limit(limit);
+
         res.status(200).json(transactions);
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -40,6 +52,11 @@ router.get('/:userId', async (req, res) => {
 // Delete a transaction
 router.delete('/delete/:transactionId', async (req, res) => {
     const { transactionId } = req.params;
+
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(transactionId)) {
+        return res.status(400).json({ message: 'Invalid transaction ID' });
+    }
 
     try {
         const transaction = await Transaction.findByIdAndDelete(transactionId);

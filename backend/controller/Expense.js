@@ -1,6 +1,8 @@
 // backend/controller/Expense.js
 import User from "../models/userSchema.js";
-import Transaction from "../models/transactionSchema.js";  // Change 'transaction' to 'Transaction'
+import Transaction from '../models/transactionSchema.js';
+
+
 
 // Example function to create a new user
 export const createUser = async (req, res) => {
